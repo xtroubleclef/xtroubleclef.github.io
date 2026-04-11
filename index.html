@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="description" content="A. Soledad Rosario — statistics, NLP, satellite data, cybersecurity, clinical research, information theory">
+<title>A. Soledad Rosario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0b0b09;--surface:#131310;--border:#1f1f1b;--border2:#2c2c27;
+  --text:#e2dcd0;--muted:#5a5a52;--muted2:#3a3a34;--accent:#c9a96e;
+  --accent-dim:#7a6440;--green:#6a9e7a;--amber:#c9a96e;--red:#9e6a6a;
+  --blue:#6a7f9e;--purple:#8a7ab5;
+  --serif:'Playfair Display',Georgia,serif;--mono:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px;position:relative;z-index:1}
+header{padding:64px 0 40px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.name-block{margin-bottom:16px}
+.name{font-family:var(--serif);font-size:clamp(36px,8vw,56px);font-weight:400;color:var(--text);letter-spacing:-.02em;line-height:1.1;margin-bottom:4px}
+.name em{font-style:italic;color:var(--accent)}
+.also-known{font-size:11px;color:var(--muted);letter-spacing:.06em;margin-top:4px}
+.tagline{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px;line-height:1.8}
+.bio{font-size:14px;color:var(--text);opacity:.75;line-height:1.8;max-width:520px;font-family:var(--serif);font-style:italic;margin-bottom:24px}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.link-pill{display:inline-flex;align-items:center;gap:5px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border2);border-radius:20px;padding:5px 12px;text-decoration:none;transition:color .15s,border-color .15s}
+.link-pill:hover{color:var(--accent);border-color:var(--accent-dim)}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);letter-spacing:.06em}
+.legend-dot{width:7px;height:7px;border-radius:50%}
+.filters{position:sticky;top:0;z-index:50;background:var(--bg);padding:12px 0;margin-bottom:8px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap}
+.filter-btn{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid var(--border2);border-radius:20px;padding:5px 12px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.filter-btn:hover{color:var(--text)}
+.filter-btn.active{color:var(--accent);border-color:var(--accent-dim);background:rgba(201,169,110,.06)}
+.section-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin:28px 0 10px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.projects{display:flex;flex-direction:column;gap:2px}
+.project-card{cursor:pointer;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--border2);border-radius:8px;padding:16px 16px 14px;cursor:pointer;transition:border-color .15s,background .15s;animation:fadeUp .3s ease both;-webkit-tap-highlight-color:transparent}
+.project-card:hover{background:#161613;border-color:var(--border2)}
+.project-card.hidden{display:none}
+.project-card.status-complete{border-left-color:var(--green)}
+.project-card.status-active{border-left-color:var(--amber)}
+.project-card.status-concept{border-left-color:var(--accent-dim)}
+.project-card.status-research{border-left-color:var(--blue)}
+.project-card.status-idea{border-left-color:var(--accent-dim)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:5px}
+.project-name{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.3}
+.project-type{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.status-badge{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;margin-top:3px}
+.badge-complete{background:rgba(106,158,122,.15);color:var(--green)}
+.badge-active{background:rgba(201,169,110,.12);color:var(--amber)}
+.badge-concept{background:rgba(122,100,64,.18);color:var(--accent)}
+.badge-research{background:rgba(106,127,158,.15);color:var(--blue)}
+.badge-idea{background:rgba(122,100,64,.18);color:var(--accent)}
+.project-desc{font-size:13px;color:var(--text);opacity:.65;line-height:1.6;margin-bottom:10px}
+.card-meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.tag{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--border);padding:2px 7px;border-radius:4px}
+.subtasks{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);animation:fadeUp .2s ease}
+.project-card.expanded .subtasks{display:block}
+.subtask-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.subtask-list{display:flex;flex-direction:column;gap:5px}
+.subtask-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text);opacity:.75;line-height:1.5}
+.subtask-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.subtask-dot.done{background:var(--green)}
+.subtask-dot.partial{background:var(--amber)}
+.subtask-dot.todo{background:var(--border2);border:1px solid var(--muted2)}
+.subtask-item.done-item{opacity:.45;text-decoration:none}
+.subtask-item.partial-item{opacity:.75}
+.detail-section{margin-top:12px}
+.detail-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.detail-text{font-size:12px;color:var(--text);opacity:.6;line-height:1.7}
+.expand-hint{font-size:10px;color:var(--muted2);margin-top:8px;text-align:right;letter-spacing:.04em}
+footer{margin:60px 0 40px;padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.footer-text{font-size:10px;color:var(--muted);letter-spacing:.06em}
+.footer-update{font-size:10px;color:var(--muted2)}
+.s1{animation-delay:.03s}.s2{animation-delay:.06s}.s3{animation-delay:.09s}.s4{animation-delay:.12s}.s5{animation-delay:.15s}.s6{animation-delay:.18s}.s7{animation-delay:.21s}.s8{animation-delay:.24s}.s9{animation-delay:.27s}.s10{animation-delay:.30s}.s11{animation-delay:.33s}.s12{animation-delay:.36s}.s13{animation-delay:.39s}.s14{animation-delay:.42s}.s15{animation-delay:.45s}.s16{animation-delay:.48s}.s17{animation-delay:.51s}.s18{animation-delay:.54s}.s19{animation-delay:.57s}.s20{animation-delay:.60s}
+</style>
+<script>
+function toggleCard(el){
+  if(event&&event.target&&event.target.tagName==='A')return;
+  var wasExpanded=el.classList.contains('expanded');
+  document.querySelectorAll('.project-card.expanded').forEach(function(c){
+    c.classList.remove('expanded');
+    var h=c.querySelector('.expand-hint');
+    if(h)h.textContent='tap to expand ↓';
+  });
+  if(!wasExpanded&&el.querySelector('.subtasks')){
+    el.classList.add('expanded');
+    var h=el.querySelector('.expand-hint');
+    if(h)h.textContent='tap to collapse ↑';
+  }
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="name-block">
+    <h1 class="name">A. Soledad <em>Rosario</em></h1>
+    <div class="also-known">Abbey Rosario</div>
+  </div>
+  <p class="tagline">Statistics · NLP · Satellite Data · Cybersecurity · Clinical Research · Information Theory</p>
+  <p class="bio">Building measurement tools, research pipelines, and products at the intersection of mathematics, language, and systems.</p>
+  <div class="links">
+    <a class="link-pill" href="https://github.com/xtroubleclef" target="_blank">⌥ GitHub</a>
+    <a class="link-pill" href="/cdn-cgi/l/email-protection#5d2f322e3c2f34323c3f3f38241d3a303c3431733e3230">✉ Email</a>
+    <a class="link-pill" href="#">↗ Resume</a>
+  </div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Complete</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div>Active</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Research</div>
+  
+  <div class="legend-item"><div class="legend-dot" style="background:var(--accent-dim)"></div>Idea</div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="product">Product</button>
+  <button class="filter-btn" data-filter="research">Research</button>
+  <button class="filter-btn" data-filter="tool">Tool</button>
+  <button class="filter-btn" data-filter="security">Security</button>
+  <button class="filter-btn" data-filter="nlp">NLP</button>
+  <button class="filter-btn" data-filter="pharma">Pharma</button>
+</div>
+
+<div class="projects" id="projects">
+
+<div class="section-label">active builds</div>
+
+<div class="project-card status-active s1" data-category="product tool" onclick="toggleCard(this)">
+  <div class="project-type">Planetary Visualizer · Personal Project</div>
+  <div class="card-top"><div class="project-name">Bark Bark + Abbey Patty</div><span class="status-badge badge-active">Active</span></div>
+  <p class="project-desc">Color coded 3D geocentric and heliocentric planetary moment viewer. Abbey Patty's and Bark Bark's natal charts displayed simultaneously on the same orbit rings. Saturn stationed direct at 3°49′ Virgo the day Bark Bark was found, 0.64° from Abbey's natal Sun. Chesta bala (Vedic motional strength) for every planet.</p>
+  <div class="card-meta"><span class="tag">Three.js</span><span class="tag">Vedic Astrology</span><span class="tag">Orbital Mechanics</span><span class="tag">WebGL</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>3D solar system — heliocentric + geocentric toggle</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Chesta bala (motional strength) for all planets</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Both charts simultaneously — gold (Abbey) + teal (Bark Bark)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Sidereal positions via Lahiri ayanamsa</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Deploy to GitHub Pages</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">The origin</div>
+      <div class="detail-text">Saturn is the only planet at peak strength at its exact station. Saturn stationed direct at 3°49′ Virgo — 0.64° from Abbey's natal Sun.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-active s2" data-category="product tool" onclick="toggleCard(this)">
+  <div class="project-type">Satellite Dashboard · Product</div>
+  <div class="card-top"><div class="project-name">GreenTrace</div><span class="status-badge badge-active">Active</span></div>
+  <p class="project-desc">GEE satellite dashboard monitoring NO₂ and VIIRS nighttime lights along the trans-Pacific shipping corridor LA → Shanghai. Independently verifiable emissions monitoring for green corridor policy.</p>
+  <div class="card-meta"><span class="tag">Google Earth Engine</span><span class="tag">Sentinel-5P</span><span class="tag">Python</span><span class="tag">SDG 9·14</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>GEE dashboard script (green_corridor_dashboard.js)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Statistical analysis notebook (regression, COVID natural experiment, 4 figures)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Slide deck content written (ISC_slide_content.md)</div>
+      <div class="subtask-item partial-item"><div class="subtask-dot partial"></div>NO₂ layer rendering — needs verification + GEE screenshots</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Real AIS corridor geometry (currently hand-drawn waypoints)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>WDPA marine protected boundaries (currently placeholder)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Completed PPTX with screenshots inserted</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Destinations</div>
+      <div class="detail-text">SpaceHACK 2027 · Remote Sensing journal short comm · ESG product pitch to logistics firms</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-active s2" data-category="product tool" onclick="toggleCard(this)">
+  <div class="project-type">Chat Application · Product</div>
+  <div class="card-top"><div class="project-name">Rewind</div><span class="status-badge badge-active">Active</span></div>
+  <p class="project-desc">A chat interface with conversation checkpointing. Save state at any point, then restore it — discarding everything that came after. When an AI conversation goes off track, rewind to before it happened instead of starting over.</p>
+  <div class="card-meta"><span class="tag">Flask</span><span class="tag">Vanilla JS</span><span class="tag">Anthropic API</span><span class="tag">PWA</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Flask backend — snapshot storage, rewind API (server.py)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Frontend — mobile-ready PWA (static/index.html)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Deploy to EC2</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Persistent storage (SQLite)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Next.js + Supabase production version</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">The insight</div>
+      <div class="detail-text">Linear tail-redaction covers 95% of real use cases. No branching needed. The same failure mode it solves (AI assumption drift) is what motivated building it.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-complete s3" data-category="tool" onclick="toggleCard(this)">
+  <div class="project-type">Analytics Scaffold · Tool</div>
+  <div class="card-top"><div class="project-name">DataSprint</div><span class="status-badge badge-complete">Complete</span></div>
+  <p class="project-desc">Theme-agnostic datathon analytics scaffold. Five tabs, auto-detects date/geo/categorical columns, runs statistical tests automatically. Built for DataHacks 2026 — UC San Diego DS3 (April 18–19).</p>
+  <div class="card-meta"><span class="tag">Streamlit</span><span class="tag">Pandas</span><span class="tag">Plotly</span><span class="tag">SciPy</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Streamlit app — 5 tabs, auto-detection, statistical tests (app.py)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>requirements.txt + README</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Deploy to Streamlit Cloud before April 18</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="section-label">research</div>
+
+<div class="project-card status-research s4" data-category="research" onclick="toggleCard(this)">
+  <div class="project-type">Epidemiology · SDSU DiMoLab · $6k SURP Funded</div>
+  <div class="card-top"><div class="project-name">COVID-19 Reproduction Number Estimation</div><span class="status-badge badge-research">Research</span></div>
+  <p class="project-desc">Funded undergraduate research estimating basic and effective reproduction numbers (R₀, Rt) across US regions during COVID-19. SDSU DiMoLab coordinated by Dr. Naveen Vaidya.</p>
+  <div class="card-meta"><span class="tag">MATLAB</span><span class="tag">R</span><span class="tag">EpiEstim</span><span class="tag">SDSU 2021–22</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Computational estimation pipeline and tools</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Poster — SDSU Summer Research Symposium 2021</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Research paper — not yet written</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Natural extension</div>
+      <div class="detail-text">Rt Estimation Benchmarking Suite — synthetic data with known true Rt values. Vaidya is the natural co-author for both.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-research s5" data-category="research nlp" onclick="toggleCard(this)">
+  <div class="project-type">NLP · Meta-Science · Research Paper</div>
+  <div class="card-top"><div class="project-name">AI Detection in Epidemiology Papers</div><span class="status-badge badge-research">Research · 60%</span></div>
+  <p class="project-desc">Sprint paper testing whether AI-generated methods sections are detectable via linguistic features, and whether AI generation correlates with lower methodological quality.</p>
+  <div class="card-meta"><span class="tag">NLP</span><span class="tag">PubMed API</span><span class="tag">scikit-learn</span><span class="tag">spaCy</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>PubMed ingestion — 100+ methods sections, 7 quality indicators (pubmed_ingest.py)</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>AI generation pipeline — paired versions via Anthropic API</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Classifier — logistic regression, 8 linguistic features, 4 figures (classifier.py)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Run on real PubMed data (needs API key)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Write the paper</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Submit to PLOS ONE or JMIR</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-research s6" data-category="research tool nlp" onclick="toggleCard(this)">
+  <div class="project-type">Information Theory · Research + Product</div>
+  <div class="card-top"><div class="project-name">Document Spectrometer</div><span class="status-badge badge-research">Research · 40%</span></div>
+  <p class="project-desc">Multi-resolution measurement framework decomposing information content into mathematically distinct components — topology, dynamical structure, statistical entropy, compression complexity. Like a prism for text.</p>
+  <div class="card-meta"><span class="tag">Info Theory</span><span class="tag">TDA</span><span class="tag">Rényi</span><span class="tag">NCD</span><span class="tag">Conformal Prediction</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Entropy framework — Shannon, Rényi spectrum, sample entropy, JSD, NCD, conditional entropy</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Topological component (persistent homology via scikit-tda)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Dynamical component (Lyapunov exponents on embedding trajectories)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Conformal prediction wrapper (distribution-free uncertainty)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Web interface + API product</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Entropy (MDPI) or NeurIPS theory track</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="section-label">medicine &amp; clinical research</div>
+
+<div class="project-card status-concept s7" data-category="pharma research" onclick="toggleCard(this)">
+  <div class="project-type">R Package · Medicine</div>
+  <div class="card-top"><div class="project-name">pvbench</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Pharmacovigilance signal detection benchmarking. Synthetic FAERS-structured data with known true drug-event interaction signals. Realistic reporting biases: notoriety bias, Weber effect, missing fields, duplicates. Full evaluation metrics suite.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">FAERS</span><span class="tag">Signal Detection</span><span class="tag">CRAN target</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Functions</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>generate_pvdata() — synthetic FAERS-structured data</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>embed_signals() — known true interaction signals</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>evaluate_detection() — sensitivity, specificity, PPV, NPV, AUROC, partial AUROC</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>benchmark_report() — comparison output</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>CRAN submission</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Pharmacoepidemiology and Drug Safety or Drug Safety</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-concept s8" data-category="pharma research" onclick="toggleCard(this)">
+  <div class="project-type">R Package · Clinical Statistics</div>
+  <div class="card-top"><div class="project-name">estimandr</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">ICH E9(R1) estimand framework implementation. Full coverage of five intercurrent event strategies: treatment policy, hypothetical, composite, while on treatment, principal stratum. Regulatory-submission-ready outputs. Known gap — no standard R package covers the full estimand framework.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">ICH E9(R1)</span><span class="tag">Clinical Trials</span><span class="tag">CRAN target</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Five intercurrent event strategy implementations</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Regulatory-submission-ready output formats</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>CRAN submission</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Statistics in Medicine or Pharmaceutical Statistics</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Why this exists</div>
+      <div class="detail-text">No standard R package covers the full ICH E9(R1) estimand framework. Every clinical statistician working in pharma hits this gap.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+
+<div class="project-card status-concept s9" data-category="research" onclick="toggleCard(this)">
+  <div class="project-type">Epidemiology · Extension of DiMoLab Work</div>
+  <div class="card-top"><div class="project-name">Rt Estimation Benchmarking Suite</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Synthetic outbreak data with known ground truth Rt values, for testing how accurately Rt estimation methods perform. Calibrated to POLYMOD contact patterns with heterogeneous mixing across age and region.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">POLYMOD</span><span class="tag">EpiEstim</span><span class="tag">Benchmarking</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Synthetic generator with known ground truth Rt by region, age, time</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Benchmarking suite comparing EpiEstim, EpiNow2, epidemia</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Epidemics, PLOS Computational Biology, or BMC Infectious Diseases</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Co-author</div>
+      <div class="detail-text">Dr. Naveen Vaidya (SDSU DiMoLab) — natural extension of existing COVID-19 work.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-concept s10" data-category="research" onclick="toggleCard(this)">
+  <div class="project-type">Causal Inference · Benchmarking</div>
+  <div class="card-top"><div class="project-name">Synthetic Epidemiological Cohort Generator</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Observational health study simulator for causal inference benchmarking. Binary exposure, binary outcome, known confounders. Parameters from NHANES, Framingham, CDC BRFSS. Explicit DAG output. Realistic MNAR missing data. Ground truth: true causal effect size and true confounder set.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">Causal Inference</span><span class="tag">DAG</span><span class="tag">NHANES</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Synthetic cohort generator with explicit DAG output</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Benchmarking suite — propensity score methods, LASSO, imputation</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — IJE or American Journal of Epidemiology</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="section-label">drug discovery &amp; cheminformatics</div>
+
+<div class="project-card status-concept s11" data-category="research pharma" onclick="toggleCard(this)">
+  <div class="project-type">Cheminformatics · Statistical Method</div>
+  <div class="card-top"><div class="project-name">Bias-Corrected MI for Molecular Features</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Mutual information between molecular descriptors and biological activity. Naive MI estimator severely biased for small datasets — implement bias correction. R + Python packages. No chemistry required — stays in the statistical/information-theoretic lane.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">Python</span><span class="tag">Mutual Information</span><span class="tag">Journal of Cheminformatics</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Bias-corrected MI estimator (R + Python)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Journal of Cheminformatics</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-concept s12" data-category="product pharma" onclick="toggleCard(this)">
+  <div class="project-type">Drug Discovery · Optimization Tool</div>
+  <div class="card-top"><div class="project-name">Maximum Entropy Library Design</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Given N compounds, select the subset that maximizes entropy of the property distribution. Convex optimization over molecular descriptor space. Streamlit app + Python package. Target: biotech startups, CROs, academic drug discovery groups.</p>
+  <div class="card-meta"><span class="tag">Python</span><span class="tag">Convex Optimization</span><span class="tag">Streamlit</span><span class="tag">Drug Discovery</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Python package — convex optimization over descriptor space</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Streamlit interface</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Distribution strategy (build after research identity established)</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+
+
+<div class="section-label">medicine &amp; clinical research</div>
+
+<div class="project-card status-concept s14" data-category="research pharma" onclick="toggleCard(this)">
+  <div class="project-type">Medicine · Data Quality</div>
+  <div class="card-top"><div class="project-name">FAERS Data Quality Framework</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Statistical framework for quantifying and correcting data quality issues in spontaneous AE reporting. Duplicate detection, inconsistent drug naming, reporting bias, Weber effect correction. Real gap — no comprehensive statistical QA framework for FAERS exists.</p>
+  <div class="card-meta"><span class="tag">FAERS</span><span class="tag">R</span><span class="tag">Signal Detection</span><span class="tag">FDA</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Statistical QA framework for FAERS</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Weber effect correction implementation</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Drug Safety or Pharmacoepidemiology and Drug Safety</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Connection</div>
+      <div class="detail-text">Upstream data quality layer for pvbench — natural to build together.</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+
+
+<div class="section-label">information theory</div>
+
+<div class="project-card status-concept s16" data-category="research" onclick="toggleCard(this)">
+  <div class="project-type">Information Theory · Bioinformatics</div>
+  <div class="card-top"><div class="project-name">Information Theory Causal Discovery for Biological Networks</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Conditional mutual information tests for causal graph learning. More powerful than correlation-based tests for nonlinear biological dependencies. Proper finite sample corrections and uncertainty quantification for inferred edges. R package.</p>
+  <div class="card-meta"><span class="tag">R</span><span class="tag">Causal Discovery</span><span class="tag">CMI</span><span class="tag">Bioinformatics</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>R package — CMI tests with finite sample corrections</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Paper — Bioinformatics or PLOS Computational Biology</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Note</div>
+      <div class="detail-text">Do not write prematurely—Ch. 2, 7, 11 of Cover &amp; Thomas foundation necessary</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="section-label">products &amp; tools</div>
+
+<div class="project-card status-concept s17" data-category="nlp product tool" onclick="toggleCard(this)">
+  <div class="project-type">NLP · Knowledge Tool</div>
+  <div class="card-top"><div class="project-name">Lemma</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Terminology extraction for conversations. Takes a text corpus, extracts domain-specific terms, generates definitions with classifications for field types, maps concept relationships as an interactive knowledge graph.</p>
+  <div class="card-meta"><span class="tag">NLP</span><span class="tag">spaCy</span><span class="tag">Knowledge Graph</span><span class="tag">D3</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Knowledge graph visualization designed</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Extraction pipeline</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Definition generation + field classification</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Web interface</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+
+
+<div class="project-card status-concept s19" data-category="nlp tool" onclick="toggleCard(this)">
+  <div class="project-type">NLP · Research Tool</div>
+  <div class="card-top"><div class="project-name">Paper Comparison Venn</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Takes two paper abstracts or PDFs, extracts claims, categorizes as unique or shared. Renders a Venn where visual design communicates corroboration vs contradiction. Claims drift spatially — font weight encodes evidence strength.</p>
+  <div class="card-meta"><span class="tag">NLP</span><span class="tag">D3</span><span class="tag">Typographic UI</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Claim extraction pipeline</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Shared vs unique classification</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Typographic Venn renderer</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-concept s20" data-category="product" onclick="toggleCard(this)">
+  <div class="project-type">Cloud Infrastructure · Mobile</div>
+  <div class="card-top"><div class="project-name">Noether</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Plain English → cloud infrastructure from your phone. Build, change, deploy entire AWS/GCP infrastructure via mobile. Dry-run preview before any action. Sandbox before production. Project memory across sessions.</p>
+  <div class="card-meta"><span class="tag">Mobile</span><span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">LLM</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>NL → infrastructure intent parsing</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Dry-run preview layer (terraform plan equivalent)</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Sandbox environment before production</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Mobile interface</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+
+<div class="section-label">security</div>
+
+<div class="project-card status-complete s21" data-category="security product" onclick="toggleCard(this)">
+  <div class="project-type">Text Generation · Consumer Tool · Gumroad</div>
+  <div class="card-top"><div class="project-name">Netlog Generator</div><span class="status-badge badge-complete">Complete</span></div>
+  <p class="project-desc">Automated network log generator for structured log output. Sold on Gumroad as a standalone tool. Freelance product built and distributed independently.</p>
+  <div class="card-meta"><span class="tag">Python</span><span class="tag">Log Generation</span><span class="tag">Gumroad</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Generator script — structured netlog output</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Gumroad listing — live and available</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+</div>
+
+<div class="section-label">nlp &amp; automation tools</div>
+
+<div class="project-card status-complete s22" data-category="nlp tool" onclick="toggleCard(this)">
+  <div class="project-type">NLP · Data Quality · Freelance Tool</div>
+  <div class="card-top"><div class="project-name">Fuzzy Matcher</div><span class="status-badge badge-complete">Complete</span></div>
+  <p class="project-desc">Fuzzy string matching tool for deduplication and entity resolution. Built for messy real-world data — names, addresses, drug names. Freelance deliverable.</p>
+  <div class="card-meta"><span class="tag">Python</span><span class="tag">FuzzyWuzzy</span><span class="tag">NLP</span><span class="tag">Entity Resolution</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Matching pipeline — configurable threshold, multiple algorithms</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Delivered to client</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-complete s23" data-category="tool" onclick="toggleCard(this)">
+  <div class="project-type">Finance · Automation · Freelance Tool</div>
+  <div class="card-top"><div class="project-name">Bank Reconciler</div><span class="status-badge badge-complete">Complete</span></div>
+  <p class="project-desc">Automated bank statement reconciliation tool. Matches transactions across accounts or statements, flags discrepancies, outputs reconciliation report. Freelance deliverable.</p>
+  <div class="card-meta"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Finance Automation</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Reconciliation pipeline — transaction matching, discrepancy flagging</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Report output — reconciliation summary</div>
+      <div class="subtask-item done-item"><div class="subtask-dot done"></div>Delivered to client</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+<div class="project-card status-concept s24" data-category="nlp tool" onclick="toggleCard(this)">
+  <div class="project-type">NLP · Pattern Detection</div>
+  <div class="card-top"><div class="project-name">Motif</div><span class="status-badge badge-concept">Idea</span></div>
+  <p class="project-desc">Recurring pattern and motif detection in text corpora. Identifies structural and semantic patterns across documents — useful for research integrity, stylometric analysis, and content auditing.</p>
+  <div class="card-meta"><span class="tag">NLP</span><span class="tag">Pattern Detection</span><span class="tag">Python</span></div>
+  <div class="subtasks">
+    <div class="subtask-label">Deliverables</div>
+    <div class="subtask-list">
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Pattern extraction pipeline</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Semantic motif clustering</div>
+      <div class="subtask-item"><div class="subtask-dot todo"></div>Visualization + report</div>
+    </div>
+  </div>
+  <div class="expand-hint">tap to expand ↓</div>
+</div>
+
+</div><!-- /projects -->
+
+<footer>
+  <span class="footer-text">A. Soledad Rosario · xtroubleclef</span>
+  <span class="footer-update" id="last-updated">updated April 2026</span>
+</footer>
+
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    const filter=this.dataset.filter;
+    let delay=0;
+    document.querySelectorAll('.project-card').forEach(card=>{
+      const cats=card.dataset.category||'';
+      const show=filter==='all'||cats.includes(filter);
+      if(show){
+        card.classList.remove('hidden');
+        card.style.animationDelay=(delay*0.04)+'s';
+        card.style.animation='none';
+        card.offsetHeight;
+        card.style.animation='';
+        delay++;
+      }else{
+        card.classList.add('hidden');
+      }
+    });
+    document.querySelectorAll('.section-label').forEach(label=>{
+      let next=label.nextElementSibling;
+      let hasVisible=false;
+      while(next&&!next.classList.contains('section-label')){
+        if(!next.classList.contains('hidden'))hasVisible=true;
+        next=next.nextElementSibling;
+      }
+      label.style.display=hasVisible?'':'none';
+    });
+  });
+});
+
+
+
+const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const
